@@ -1,0 +1,155 @@
+.mentor-list-section{
+    width: 100%;
+    min-height: 86vh;
+}
+
+.fileter-search-section{
+    display: flex;
+    justify-content: right;
+}
+
+.login-logout-box{
+    padding: 10px 20px
+}
+
+.side-menu-section {
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-search-section{
+    display:flex;
+    padding:10px;
+    justify-content : flex-end;
+    border-bottom: 1px solid #ccc
+}
+
+.filter-section input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.filter-section span {
+    font-size: 18px;
+    padding: 10px 20px 10px 10px;
+}
+
+
+.search-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    background-color: #2344ff; /* 초록색 배경 */
+    color: white; /* 흰색 텍스트 */
+  }
+
+.search-input{
+    width: 200px;
+    height: 38px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.side-menu-container{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.side-menu-container div{
+    width: 40%;
+    text-align: right;
+}
+
+.side-menu-container span{
+    display: inline-block;
+    padding: 15px 10px;
+    font-size: 18px;
+}
+
+/*  멘토 영역  */
+.mentor-section{
+    padding: 20px;
+    width: 90%;
+}
+
+.mentor-section-title{
+    text-align: center;
+}
+
+.mentor-card-boxs{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+
+.mentor-card{
+    width: 21%;
+    height: 250px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.mentor-card-title{
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.display-flex{
+    display: flex;
+}
+
+.mentor-card-job-info{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mentor-card-job-info dt{
+    font-weight: 700;
+}
+
+.mentor-card-img img{
+    width: 50px;
+}
+
+.mentor-card-name{
+    font-size: 18px;
+    padding: 10px;
+}
+
+.search-section {
+    padding-left: 10px;
+}
+
+.filter-section{
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.title{
+    font-weight:700;
+    padding:10px 0;
+}
+
+.button {
+    display: block;
+    background-color: #2344ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align:center;
+}

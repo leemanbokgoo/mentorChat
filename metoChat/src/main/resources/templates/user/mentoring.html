@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+    <link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/user/mentoring.css}">
+</head>
+<body>
+<section class="display-flex">
+    <div th:replace="layout/sidebar :: sidebar"></div>
+    <section class="mentroing-section">
+        <div class="tab" id="tab">
+            <ul>
+                <!--<li><a href="/mentoring/0">전체</a></li>-->
+                <li><a th:href="@{/user/mentoring?state=2}">승인대기</a></li>
+                <li><a th:href="@{/user/mentoring?state=1}">예약확정</a></li>
+                <li><a th:href="@{/user/mentoring?state=3}">이용완료</a></li>
+                <li><a th:href="@{/user/mentoring?state=0}">취소</a></li>
+            </ul>
+        </div>
+        <div id="tab-content">
+            <div class="all-content">
+                <div class="all-list-box">
+                    <div th:if="${ mentoringList.size() != 0 }" >
+                        <div class="card-container">
+                            <div th:each=" mentoring : ${mentoringList }" style="width:24% maring-right:10px">
+                                <div class="all-list-card">
+                                    <div class="all-list-card-top">
+                                        <div th:if ="${mentoring.state eq 0 }" >
+                                            <div class="all-list-state">예약취소</div>
+                                        </div>
+                                        <div th:if ="${mentoring.state == 1 }" >
+                                            <div class="all-list-state">예약확정</div>
+                                        </div>
+                                        <div th:if ="${mentoring.state == 2 }" >
+                                            <div class="all-list-state">예약대기</div>
+                                        </div>
+                                        <div class="all-list-title" th:text="${mentoring.title}">비전공자 전공자 취업ㅇ신임 어쩌고</div>
+                                        <div class="all-list-mentor">
+                                            <span>멘토</span>
+                                            <span th:text="${mentoring.name}"></span>
+                                        </div>
+                                        <div class="all-list-date">
+                                            <span>일정</span>
+                                            <span th:text="${mentoring.mentoringDate}"></span> | <span th:text="${mentoring.startTime}"></span> : <span th:text="${mentoring.endTime}"></span>
+                                        </div>
+                                        <div class="all-list-date">
+                                            <span>신청일</span>
+                                            <span th:text="${#temporals.format(mentoring.createdDate, 'yyyy-MM-dd')}"></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="display-flex">
+                                            <div th:if ="${mentoring.state == 2 }" >
+                                                <button class="all-list-state" th:onclick="stateMentoring([[${mentoring.id}]], '1')">예약확정</button>
+                                            </div>
+                                            <div th:if ="${ mentoring.state == 2 || mentoring.state == 1 }" >
+                                                <button class="all-list-state"  th:onclick="stateMentoring([[${mentoring.id}]], '0')">예약취소</button>
+                                            </div>
+                                        </div>
+                                        <!--                                    <div class="all-card-btn-box">-->
+                                        <!--                                        <button>상세보기</button>-->
+                                        <!--                                    </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pagingBtnBox">
+                            <a th:href="@{/user/mentoring(page=1)}">처음 </a>
+                            <a th:href="${mentoringPages.first} ? '#' : @{/user/mentoring(page=${mentoringPages.number})}"> 이전 </a>
+                            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                            <span th:if="${page == mentoringPages.number + 1}" th:text="${page}" class="active"></span>
+                                <span th:unless="${page == mentoringPages.number + 1}">
+                                    <a th:href="@{/user/mentoring(page=${page})}" th:text="${page}"></a>
+                                </span>
+                            </span>
+                            <a th:href="${mentoringPages.last} ? '#' : @{/user/mentoring(page=${mentoringPages.number + 2})}"> 다음 </a>
+                            <a th:href="@{/user/mentoring(page=${mentoringPages.totalPages})}"> 마지막</a>
+                        </div>
+                    </div>
+                    <div th:if="${ mentoringList.size() == 0}">
+                        <div> 멘토링 내역이 없습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script th:src="@{/js/user/mentoring.js}"></script>
+</body>
+</html>

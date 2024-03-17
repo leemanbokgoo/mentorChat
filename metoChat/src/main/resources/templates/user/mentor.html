@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+<!-- css -->
+<link rel="stylesheet" th:href="@{/css/user/mentor.css}">
+<link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+
+<section class="display-flex">
+    <div th:replace="layout/sidebar :: sidebar"></div>
+    <!-- 멘토 등록 section -->
+    <section class="content">
+        <div class="container">
+            <div class="title-box">
+                <h2 class="title">멘토 신청</h2>
+                <div th:if="${mentor.state == false }">
+                    <button class="button text-right" th:onclick="mentoringState([[${mentor.state}]])">멘토링 OFF</button>
+                </div>
+                <div th:if="${mentor.state == true }">
+                    <button class="button text-right" th:onclick="mentoringState([[${mentor.state}]])">멘토링 ON</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>직군</div>
+                    <span th:text="${mentor.title}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>직군</div>
+                    <span th:text="${mentor.occupation}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>직무</div>
+                    <span th:text="${mentor.job}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>경력</div>
+                    <span th:text="${mentor.career}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>1회당 가격</div>
+                <span th:text="${mentor.price}"></span>
+            </div>
+            <div class="form-group">
+                <div>1회당 시간</div>
+                <span th:text="${mentor.mentoringTime} + '분'"></span>
+            </div>
+            <div class="form-group">
+                <div>멘토링 시간 설정</div>
+                <p>시간은 중복 설정이 가능합니다. ex)11:00~12:00 , 14:00~16:00<br>
+                    멘토링 시간을 설정하면 자동으로 시간별로 보이게 됩니다.<br>
+                    (ex 11:00~13:00 선택후 멘토링 시간 1시간 설정 시 멘티분들에게는 11:00, 12:00 13:00으로 노출됨) </p>
+                <div th:if="${mentorTimeList}">
+                    <div th:each="mentorTime : ${mentorTimeList}" class="mentoring-item" th:data-id="${mentorTime.id}">
+                        <p th:text="${mentorTime.dayOfWeek} + ' | ' + ${mentorTime.startTime} + ' ~ ' + ${mentorTime.endTime}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>자기소개</div>
+                <p th:text="${mentor.introduction}"></p>
+            </div>
+            <div class="form-group">
+                <div>멘토링 환영 공지</div>
+                <p>멘토링을 신청이 확정되면 멘티에게 가는 환영 공지입니다.</p>
+                <p th:text="${mentor.introduction}"></p>
+            </div>
+            <div class="form-group">
+                <a class="button" href="/mentor/update">수정</a>
+            </div>
+        </div>
+    </section>
+    <!-- 멘토 등록 section 끝 -->
+</section>
+
+<script th:src="@{/js/user/mentor.js}"></script>
+<div th:replace="layout/footer :: footer"></div>

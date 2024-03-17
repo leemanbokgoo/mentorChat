@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+<link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+<link rel="stylesheet" th:href="@{/css/user/email.css}">
+
+<section class="display-flex">
+    <div th:replace="layout/sidebar :: sidebar"></div>
+    <!-- 이메일 인증 section -->
+    <section class="content">
+        <div>
+            <p>개인정보 변경을 위해서 이메일을 인증해주세요.</p>
+            <div id="timer">03:00</div>
+            <div class="email-input-box">
+                <input id="email_num" type="text" maxlength="6">
+                <button class="button" id="emailNumBtn">확인</button>
+                <button class="button" id="emailSendBtn">이메일요청</button>
+            </div>
+        </div>
+    </section>
+    <!-- 이메일 인증 section 끝 -->
+</section>
+
+<script th:src="@{/js/cookies.js}"></script>
+<script th:src="@{/js/user/email.js}"></script>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

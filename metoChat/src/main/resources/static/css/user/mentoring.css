@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.mentroing-section {
+    width:80%;
+    margin: 20px;
+}
+
+.tab ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab li {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.tab li:hover {
+    background-color: #abafb4;
+    color: white;
+}
+
+#tab-content {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.all-content{
+    width: 100%;
+}
+.card-container{
+    width:100%;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.all-list-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.all-list-card-top {
+    margin-bottom: 10px;
+}
+
+.all-list-state {
+    width: fit-content;
+    background-color: #28a745;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.all-list-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.all-list-mentor span:first-child {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.all-list-date span:first-child {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.all-card-btn-box button{
+    width: 100%;
+    padding: 10px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}

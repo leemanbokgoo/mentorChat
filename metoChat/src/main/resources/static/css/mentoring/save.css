@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding:  x;
+}
+
+.mentoring-time-section{
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mentoring-time-container{
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mentoring-time-box {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mentoring-time-box > div {
+    margin-bottom: 10px;
+}
+
+.form-group {
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.form-conent{
+    padding: 10px;
+}
+
+.form-conent > div {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-conent > input, .form-conent > textarea {
+    width: 100%;
+    flex: 2;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-conent > textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+}
+
+.btn-box{
+    width: 100%;
+    text-align: center;
+}
+
+#saveBtn {
+    width: 200px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#saveBtn:hover {
+    background-color: #0056b3;
+}
+
+.timeButton{
+    background-color: #007bff; /* 파란색 배경 */
+    color: #fff; /* 흰색 텍스트 */
+    border: none; /* 테두리 없음 */
+    padding: 10px 20px; /* 안쪽 여백 */
+    margin: 5px; /* 외부 여백 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+.inactive{
+background-color: #ddd; /* 회색 배경 */
+    color: #777; /* 어두운 텍스트 */
+    cursor: not-allowed; /* 클릭 비활성화 */
+}
+
+input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-content{
+    padding: 10px 0;
+}

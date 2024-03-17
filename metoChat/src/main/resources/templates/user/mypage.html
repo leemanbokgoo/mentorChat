@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/user/mypage.css}">
+    <!-- layout/header 삽입 -->
+    <div th:include="layout/header :: header"></div>
+    <div th:include="layout/menu :: menu"></div>
+</head>
+<body>
+<section class="display-flex">
+    <!-- layout/sidebar 삽입 -->
+    <div th:replace="layout/sidebar :: sidebar"></div>
+    <!-- 마이페이지 section -->
+    <section class="container">
+        <h1 class="title"> 마이페이지 </h1>
+        <div>
+            <div class="">
+                <div> 프로필이미지 </div>
+                <img th:src="${user.profileImg}" alt="이미지" width="200" height="200">
+            </div>
+            <div class="form-group">
+                <div> 이메일 </div> | <span th:text="${user.email}"></span>
+            </div>
+            <div class="form-group">
+                <div> 닉네임 </div> | <span th:text="${user.name}"></span>
+            </div>
+            <div class="form-group">
+                <a class="button" th:href="@{/mypage/email}" >수정</a>
+            </div>
+        </div>
+    </section>
+</section>
+<!-- layout/footer 삽입 -->
+<div th:replace="layout/footer :: footer"></div>
+<script src="/js/user/mentor.js"></script>
+</body>
+</html>

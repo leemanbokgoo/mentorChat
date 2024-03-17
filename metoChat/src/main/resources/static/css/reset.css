@@ -1,0 +1,85 @@
+/* Eric Meyer's Reset CSS */
+/* v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.p-r-10{
+    padding-right: 10px;
+}
+
+
+ .pagingBtnBox {
+    text-align: center;
+}
+
+.pagingBtnBox a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    background-color: #f2f2f2;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.pagingBtnBox a:hover {
+    background-color: #ddd;
+}
+
+.pagingBtnBox .active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    padding: 5px 10px;
+    margin: 0 2px;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}

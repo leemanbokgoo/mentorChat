@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+<link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+<link rel="stylesheet" th:href="@{/css/error/404error.css}">
+
+<div class="errorPage">
+    <h1>404 ERROR!🤖</h1>
+    <div>해당페이지는 없는 페이지에요🥲</div>
+</div>
+</body>
+</html>

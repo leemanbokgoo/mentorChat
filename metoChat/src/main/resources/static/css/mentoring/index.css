@@ -1,0 +1,53 @@
+
+.mentoring-time-section{
+    width: 100%;
+}
+
+.mentoring-time-container{
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 80px;
+}
+
+.mentoring-box {
+    width: 80%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mentoring-box .content-box {
+    margin-bottom: 15px;
+}
+
+.mentoring-box .content-box div {
+    font-weight: bold;
+}
+
+.mentoring-box .btn-box {
+    text-align: center;
+}
+
+.mentoring-box button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mentoring-box button:hover {
+    background-color: #0056b3;
+}
+
+.display-flex{
+    display: flex;
+}
+
+.display-flex div{
+    padding-right: 10px;
+}

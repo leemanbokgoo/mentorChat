@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+<!-- CSS -->
+<link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
+<link rel="stylesheet" th:href="@{/css/user/mypage-update.css}">
+
+<section class="display-flex">
+    <div class="side-container">
+        <div th:replace="layout/sidebar :: sidebar"></div>
+    </div>
+    <!-- 마이페이지 section -->
+    <section class="container">
+        <h1 class="title">마이페이지</h1>
+        <div>
+            <div class="form-group">
+                <div class="p-r-10">프로필이미지</div>
+                <input type="file" id="profileImg" th:value="${user.name}" required>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>이메일 |</div>
+                    <span th:text="${user.email}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="display-flex">
+                    <div>닉네임</div>
+                    <input type="text" id="name" name="name" th:value="${user.name}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="updateBtn">수정</button>
+            </div>
+        </div>
+    </section>
+</section>
+<script th:inline="javascript">
+    var oriProfileImg = [[${user.profileImg}]];
+</script>
+<script th:src="@{/js/user/mymage-update.js}"></script>
+<div th:replace="layout/footer :: footer"></div>

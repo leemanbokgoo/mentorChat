@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/mentoring/index.css}">
+<div th:include="layout/header :: header"></div>
+<div th:include="layout/menu :: menu"></div>
+
+<section class="mentoring-time-section">
+    <div class="mentoring-time-container">
+        <div class="mentoring-box">
+            <div class="content-box display-flex">
+                <div> 타이틀 </div>
+                <span th:text="${mentor.title}"></span>
+            </div>
+            <div class="content-box display-flex">
+                <div> 멘토 </div>
+                <span th:text="${mentor.name}"></span>
+            </div>
+            <div class="content-box display-flex">
+                <div th:text="${mentor.occupation} + ' / ' + ${mentor.job} + ' / ' + ${mentor.career} + '년'"></div>
+            </div>
+            <div class="content-box display-flex">
+                <div th:text="'1회당 ' + ${mentor.price} + ' / ' + ${mentor.mentoringTime} + '분'"></div>
+            </div>
+            <div class="content-box">
+                <div th:text="${mentor.introduction}"></div>
+                <p></p>
+            </div>
+            <div class="btn-box">
+                <button type="button" th:onclick="'mentoringSend(' + ${mentor.id} + ')'">멘토링 신청하기</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script th:inline="javascript">
+    function mentoringSend(id){
+        window.location.replace("/mentoring/" + id);
+    }
+</script>
+
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>
