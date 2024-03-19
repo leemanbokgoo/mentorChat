@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static com.example.metoChat.exception.ErrorCode.REIVEW_NOT_FOUND;
+import static com.example.metoChat.exception.ErrorCode.USER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -34,10 +35,9 @@ public class ReviewsService {
 
     // 리뷰 수정
     public Long updateReview(SaveReivewRqeustDto reivewRqeustDto, Long reveiwId){
-        Optional<Reviews> optionalReviews = Optional.ofNullable( reviewsRepository.findById(reveiwId)
-                .orElseThrow(() -> new CustomException(REIVEW_NOT_FOUND)));
-        optionalReviews.get().update(reivewRqeustDto);
-        return optionalReviews.get().getId();
+        Reviews reviews = reviewsRepository.findById(reveiwId)
+                .orElseThrow(() -> new CustomException(REIVEW_NOT_FOUND));
+        return reviews.getId();
     }
 
     // 리뷰 목록 조회

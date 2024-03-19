@@ -5,6 +5,8 @@ import com.example.metoChat.domain.metoring.Mentoring;
 import com.example.metoChat.domain.metoring.MentoringRepository;
 import com.example.metoChat.domain.metoring.MentoringRepositoryImpl;
 import com.example.metoChat.domain.user.User;
+import com.example.metoChat.exception.CustomException;
+import com.example.metoChat.exception.ErrorCode;
 import com.example.metoChat.web.dto.mentoring.MentoringListResponse;
 import com.example.metoChat.web.dto.mentoring.MentoringSaveRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,6 @@ public class MentoringService {
     public boolean saveMentoring(MentoringSaveRequest request, User user, Mentor mentor){
 
         Mentoring entity = mentoringRepository.save(request.toEntity(user ,mentor));
-
         if( entity != null ){
             return true;
         } else {
@@ -36,7 +37,7 @@ public class MentoringService {
     // 멘토링 예약 / 취소
     public Long stateMentoring(Long mentoringId, int state){
         Optional<Mentoring> entity = Optional.ofNullable(mentoringRepository.findById(mentoringId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멘토링이 없습니다. id=" + mentoringId)));
+                .orElseThrow(() -> new CustomException(ErrorCode.MENTOR_NOT_FOUND)));
 
         Mentoring mentoring = entity.get();
         if( mentoring != null ){

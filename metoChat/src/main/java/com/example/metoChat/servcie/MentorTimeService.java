@@ -57,14 +57,20 @@ public class MentorTimeService {
         return mentorTimeRepositoryImpl.getDayOfWeekDay(mentorId);
     }
 
-    public List<Map<String, String>> getMentorTime( Long id, int dayOfWeek, LocalDate mentoringDate ){
+    public List<Map<String, String>> getResevationTime( Long id, int dayOfWeek, LocalDate mentoringDate ){
 
         List<MentorTimeListResponse> mentorResponses = mentorTimeRepositoryImpl.getTimeByDayforWeek(id,dayOfWeek);
-
         if (mentorResponses.size() != 0 ){
-            List<Map<String, String>> mentorTime = getTimeList(mentorResponses,mentorResponses.get(0).getMentoringTime());
+
+            int timePerSession = mentorTimeRepository.findMentoringTimeById(id);
+
+            // 1회당 시간 넘겨줌
+            // 해당 멘토링 날짜의 신청된 멘토링 시간 조회
             List<MentorTimeListResponse> mentoringTimeResponse = mentoringRepositoryImpl.getTimeByMentoringDate(id,mentoringDate );
-            List<Map<String, String>> mentoringTime = getTimeList(mentoringTimeResponse,mentorResponses.get(0).getMentoringTime());
+
+            // 해당 시간대를 시간별로 쪼갬
+            List<Map<String, String>> mentoringTime = getTimeList(mentoringTimeResponse,timePerSession);
+            List<Map<String, String>> mentorTime = getTimeList(mentorResponses,timePerSession );
 
             // set 으로 변환
             Set<Map<String, String>> setMentorTime = new LinkedHashSet<>(mentorTime);
@@ -103,7 +109,7 @@ public class MentorTimeService {
             //현재날짜와 startTime을 이용해서 yy-mm-dd hh-mm 형식 맞춤
             LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), item.getStartTime());
 
-            // starTime이 endTim보다 이전인 동안
+            // starTime이 endTim보다 이전인 동안 while
             while (startTime.isBefore(LocalDateTime.of(LocalDate.now(), item.getEndTime()))) {
 
                 LocalDateTime endTime = startTime.plusMinutes(item.getMentoringTime());
@@ -116,6 +122,7 @@ public class MentorTimeService {
                 mentorTime.add(map);
             }
 
+            // 마지막 시간대까지 추가
             Map<String, String> map = new HashMap<>();
 
             LocalTime endTime = item.getEndTime();
