@@ -17,11 +17,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import com.example.metoChat.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import static com.example.metoChat.exception.ErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,9 +38,9 @@ public class S3ImageService {
     private String bucketName;
 
     public String upload(MultipartFile image) throws Exception {
-//        if(image.isEmpty() || Objects.isNull(image.getOriginalFilename())){
-////            throw new S3Exception(ErrorCode.EMPTY_FILE_EXCEPTION);
-//        }
+        if(image.isEmpty() || Objects.isNull(image.getOriginalFilename())){
+            throw new CustomException(IMAGE_TYPE_ERROR);
+        }
         return this.uploadImage(image);
     }
 
@@ -53,16 +57,15 @@ public class S3ImageService {
     private void validateImageFileExtention(String filename) {
         int lastDotIndex = filename.lastIndexOf(".");
         if (lastDotIndex == -1) {
-//            throw new S3Exception(ErrorCode.NO_FILE_EXTENTION);
+            throw new CustomException(IMAGE_FILE_ERROR);
         }
 
         String extention = filename.substring(lastDotIndex + 1).toLowerCase();
         List<String> allowedExtentionList = Arrays.asList("jpg", "jpeg", "png", "gif");
 
-//        if (!allowedExtentionList.contains(extention)) {
-//
-////            throw new S3Exception(ErrorCode.INVALID_FILE_EXTENTION);
-//        }
+        if (!allowedExtentionList.contains(extention)) {
+            throw new CustomException(IMAGE_TYPE_ERROR);
+        }
     }
 
     private String uploadImageToS3(MultipartFile image) throws IOException {
@@ -85,8 +88,8 @@ public class S3ImageService {
                             .withCannedAcl(CannedAccessControlList.PublicRead);
             amazonS3.putObject(putObjectRequest); // put image to S3
         }catch (Exception e){
-//            throw new S3Exception(ErrorCode.PUT_OBJECT_EXCEPTION);
             e.printStackTrace();
+            throw new CustomException(UPLOAD_FAIL_EEROR);
         }finally {
             byteArrayInputStream.close();
             is.close();
@@ -100,7 +103,7 @@ public class S3ImageService {
         try{
             amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
         }catch (Exception e){
-//            throw new S3Exception(ErrorCode.IO_EXCEPTION_ON_IMAGE_DELETE);
+            throw new CustomException(DLELETE_FAIL_EEOR);
         }
     }
 
@@ -110,8 +113,7 @@ public class S3ImageService {
             String decodingKey = URLDecoder.decode(url.getPath(), "UTF-8");
             return decodingKey.substring(1); // 맨 앞의 '/' 제거
         }catch (MalformedURLException | UnsupportedEncodingException e){
-//            throw new S3Exception(ErrorCode.IO_EXCEPTION_ON_IMAGE_DELETE);
-            throw new Exception(e.getMessage());
+            throw new CustomException(DLELETE_FAIL_EEOR);
         }
     }
 }
