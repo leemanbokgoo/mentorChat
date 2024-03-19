@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.example.metoChat.exception.ErrorCode.*;
@@ -37,6 +38,7 @@ public class S3ImageService {
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
 
+    @Transactional
     public String upload(MultipartFile image) throws Exception {
         if(image.isEmpty() || Objects.isNull(image.getOriginalFilename())){
             throw new CustomException(IMAGE_TYPE_ERROR);
@@ -44,6 +46,7 @@ public class S3ImageService {
         return this.uploadImage(image);
     }
 
+    @Transactional
     private String uploadImage(MultipartFile image) throws Exception {
         this.validateImageFileExtention(image.getOriginalFilename());
         try {
@@ -54,6 +57,7 @@ public class S3ImageService {
     }
 
     // 이미지 인지 확인
+    @Transactional
     private void validateImageFileExtention(String filename) {
         int lastDotIndex = filename.lastIndexOf(".");
         if (lastDotIndex == -1) {
@@ -68,6 +72,7 @@ public class S3ImageService {
         }
     }
 
+    @Transactional
     private String uploadImageToS3(MultipartFile image) throws IOException {
         String originalFilename = image.getOriginalFilename(); //원본 파일 명
         String extention = originalFilename.substring(originalFilename.lastIndexOf(".")); //확장자 명
@@ -98,6 +103,7 @@ public class S3ImageService {
         return amazonS3.getUrl(bucketName, s3FileName).toString();
     }
 
+    @Transactional
     public void deleteImageFromS3(String imageAddress) throws Exception {
         String key = getKeyFromImageAddress(imageAddress);
         try{
@@ -107,6 +113,7 @@ public class S3ImageService {
         }
     }
 
+    @Transactional
     private String getKeyFromImageAddress(String imageAddress) throws Exception {
         try{
             URL url = new URL(imageAddress);

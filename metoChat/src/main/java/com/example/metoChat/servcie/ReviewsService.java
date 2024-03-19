@@ -9,6 +9,7 @@ import com.example.metoChat.exception.CustomException;
 import com.example.metoChat.web.dto.Review.SaveReivewRqeustDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class ReviewsService {
     private final UserService userService;
 
     // 리뷰 등록
+    @Transactional
     public Long saveReview(SaveReivewRqeustDto reivewRqeustDto, String email){
 
         User user = userService.getUserByEmail(email);
@@ -34,6 +36,7 @@ public class ReviewsService {
     }
 
     // 리뷰 수정
+    @Transactional
     public Long updateReview(SaveReivewRqeustDto reivewRqeustDto, Long reveiwId){
         Reviews reviews = reviewsRepository.findById(reveiwId)
                 .orElseThrow(() -> new CustomException(REIVEW_NOT_FOUND));

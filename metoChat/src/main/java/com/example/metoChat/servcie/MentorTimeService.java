@@ -12,6 +12,7 @@ import com.example.metoChat.web.dto.mentorTime.MentorTimeSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,7 +31,8 @@ public class MentorTimeService {
     private final MentorTimeRepositoryImpl mentorTimeRepositoryImpl;
     private final MentoringRepositoryImpl mentoringRepositoryImpl;
 
-    // 멘토 시간 등록
+    // 멘토링 설정 시간 등록
+    @Transactional
     public boolean save(MentorTimeSaveRequestDto requestDto, Mentor mentor){
         MentorTime entity = mentorTimeRepository.save(requestDto.toEntity(mentor));
 
@@ -41,6 +43,8 @@ public class MentorTimeService {
         }
     }
 
+    // 멘토링 설정 시간 삭제
+    @Transactional
     public boolean delete(Mentor mentor){
         List<MentorTime> mentorTimeList = mentor.getMentorTimes();
         for ( MentorTime mentorTime : mentorTimeList ){
@@ -53,10 +57,12 @@ public class MentorTimeService {
     }
 
     // 멘토링 신청 시간 확인
+    @Transactional(readOnly = true)
     public  List<MentorTimeListResponse> mentoringTimeCheck( Long mentorId){
         return mentorTimeRepositoryImpl.getDayOfWeekDay(mentorId);
     }
 
+    @Transactional(readOnly = true)
     public List<Map<String, String>> getResevationTime( Long id, int dayOfWeek, LocalDate mentoringDate ){
 
         List<MentorTimeListResponse> mentorResponses = mentorTimeRepositoryImpl.getTimeByDayforWeek(id,dayOfWeek);
@@ -99,6 +105,7 @@ public class MentorTimeService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Map<String, String>> getTimeList(List<MentorTimeListResponse> responses, int mentoringTime ){
 
         List<Map<String,String>> mentorTime = new ArrayList<>();

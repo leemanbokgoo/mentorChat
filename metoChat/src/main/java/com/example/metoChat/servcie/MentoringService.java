@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class MentoringService {
     private final MentoringRepositoryImpl mentoringRepositoryImpl;
 
     // 멘토링 신청
+    @Transactional
     public boolean saveMentoring(MentoringSaveRequest request, User user, Mentor mentor){
 
         Mentoring entity = mentoringRepository.save(request.toEntity(user ,mentor));
@@ -35,6 +37,7 @@ public class MentoringService {
     }
 
     // 멘토링 예약 / 취소
+    @Transactional
     public Long stateMentoring(Long mentoringId, int state){
         Optional<Mentoring> entity = Optional.ofNullable(mentoringRepository.findById(mentoringId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MENTOR_NOT_FOUND)));
@@ -47,6 +50,7 @@ public class MentoringService {
         return mentoringId;
     }
 
+    @Transactional(readOnly = true)
     public Page<MentoringListResponse> getMyMentoring( Pageable pageable, Long userId, int state){
 
         int page = pageable.getPageNumber() - 1; // page 위치에 있는 값은 0부터 시작
