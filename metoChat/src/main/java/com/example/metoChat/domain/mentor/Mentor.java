@@ -1,6 +1,7 @@
 package com.example.metoChat.domain.mentor;
 
 import com.example.metoChat.domain.BaseTimeEntity;
+import com.example.metoChat.domain.Reviews.Reviews;
 import com.example.metoChat.domain.mentorTime.MentorTime;
 import com.example.metoChat.domain.metoring.Mentoring;
 import com.example.metoChat.domain.user.User;
@@ -70,15 +71,16 @@ public class Mentor extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // 실제 저장되는 형식 필드
     // mentor <- mentorTime
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
     private List<MentorTime> mentorTimes = new ArrayList<>();
 
-    // 실제 저장되는 형식 필드
-    // mentor <- mentorTime
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mentoring> mentoring = new ArrayList<>();
+
+    // mentor <- mentorTime
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
+    private List<Reviews> reviews = new ArrayList<>();
 
     @Builder
     public Mentor( String title, int occupation, String job, int career, String introduction, String notification, int price, User user, int mentoringTime ) {

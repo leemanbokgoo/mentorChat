@@ -6,6 +6,7 @@ import com.example.metoChat.domain.mentorTime.MentorTimeRepository;
 import com.example.metoChat.domain.mentorTime.MentorTimeRepositoryImpl;
 import com.example.metoChat.domain.metoring.MentoringRepositoryCustom;
 import com.example.metoChat.domain.metoring.MentoringRepositoryImpl;
+import com.example.metoChat.exception.CustomException;
 import com.example.metoChat.web.dto.mentorTime.MentorTimeListResponse;
 import com.example.metoChat.web.dto.mentorTime.MentorTimeSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static com.example.metoChat.exception.ErrorCode.MENTORING_DELETE_ERROR;
+import static com.example.metoChat.exception.ErrorCode.USER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +37,7 @@ public class MentorTimeService {
         if( entity != null ){
             return true;
         } else {
-            return false;
+            throw new CustomException(USER_NOT_FOUND);
         }
     }
 
@@ -41,6 +45,7 @@ public class MentorTimeService {
         List<MentorTime> mentorTimeList = mentor.getMentorTimes();
         for ( MentorTime mentorTime : mentorTimeList ){
             mentorTimeRepository.deleteById(mentorTime.getId());
+            throw new CustomException(MENTORING_DELETE_ERROR);
         }
         mentor.deleteMentorTime();
 
@@ -94,10 +99,11 @@ public class MentorTimeService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         for ( MentorTimeListResponse item : responses) {
+
             //현재날짜와 startTime을 이용해서 yy-mm-dd hh-mm 형식 맞춤
             LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), item.getStartTime());
 
-            // starTime이 endTim보다 이전인동안
+            // starTime이 endTim보다 이전인 동안
             while (startTime.isBefore(LocalDateTime.of(LocalDate.now(), item.getEndTime()))) {
 
                 LocalDateTime endTime = startTime.plusMinutes(item.getMentoringTime());
@@ -109,11 +115,15 @@ public class MentorTimeService {
                 startTime = endTime;
                 mentorTime.add(map);
             }
+
             Map<String, String> map = new HashMap<>();
+
             LocalTime endTime = item.getEndTime();
             LocalTime endStatTime = endTime.minusMinutes(mentoringTime);
+
             map.put("startTime", endStatTime.format(formatter));
             map.put("endTime", endTime.format(formatter));
+
             mentorTime.add(map);
 
         }

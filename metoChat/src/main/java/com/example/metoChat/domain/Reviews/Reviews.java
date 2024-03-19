@@ -1,7 +1,9 @@
 package com.example.metoChat.domain.Reviews;
 
 import com.example.metoChat.domain.BaseTimeEntity;
+import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.user.User;
+import com.example.metoChat.web.dto.Review.SaveReivewRqeustDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,20 +27,26 @@ public class Reviews extends BaseTimeEntity {
     @Column( nullable = false)
     private int star;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private Mentor mentor;
+
     @Builder
-    public Reviews(String content, int star ) {
+    public Reviews(String content, int star, User user, Mentor menetor ) {
         this.content = content;
         this.star = star;
+        this.user = user;
+        this.mentor = menetor;
     }
 
     // 3일 이후에는 리뷰 업뎃 불가
-    public Reviews update(String content, int star ) {
-        this.content = content;
-        this.star = star;
+    public Reviews update(SaveReivewRqeustDto reivewRqeustDto) {
+        this.content = reivewRqeustDto.getContent();
+        this.star = reivewRqeustDto.getStart();
         return this;
     }
 }

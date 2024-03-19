@@ -13,5 +13,4 @@ public interface MentorRepositoryCustom {
     Page<MentorListResponseDto> getSearchMentor(Pageable pageable, SearchRequestDto searchRequestDto);
     List<MentorListResponseDto> getFilterSearch(Pageable pageable, SearchRequestDto searchRequestDto );
     Long getCount(Pageable pageable, SearchRequestDto searchRequestDto);
-
 }

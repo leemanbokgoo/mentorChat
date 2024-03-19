@@ -5,6 +5,7 @@ import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.mentor.MentorRepositoryImpl;
 import com.example.metoChat.domain.user.User;
 import com.example.metoChat.domain.user.UserRepository;
+import com.example.metoChat.exception.CustomException;
 import com.example.metoChat.web.dto.mento.*;
 import com.example.metoChat.web.dto.mentorTime.MentorTimeSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.metoChat.exception.ErrorCode.MENTOR_NOT_FOUND;
+import static com.example.metoChat.exception.ErrorCode.USER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +33,6 @@ public class MentorService {
     // 멘토 등록
     @Transactional
     public Long save(MentorSaveRequestDto requestDto, User user) {
-
         Mentor mentor = mentorRepository.save(requestDto.toEntity(user));
         List<MentorTimeSaveRequestDto> mentorTImelist = requestDto.getMentoringTimeList();
 
@@ -46,7 +49,10 @@ public class MentorService {
         // 기존 멘토링 시간 설정 삭제
         if (mentor != null) {
             mentorTimeService.delete(mentor);
+        } else {
+            throw new CustomException(MENTOR_NOT_FOUND);
         }
+
         // 새로 멘토링 시간 저장
         List<MentorTimeSaveRequestDto> mentorTImelist = requestDto.getMentoringTimeList();
         for( MentorTimeSaveRequestDto dto : mentorTImelist) {
@@ -72,7 +78,7 @@ public class MentorService {
     @Transactional
     public boolean stateUpdate(boolean state, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. email=" + userEmail));
+                    .orElseThrow(() -> new CustomException(MENTOR_NOT_FOUND));
         Mentor mentor = user.getMentor();
         mentor.stateUpdate(state);
 
@@ -91,15 +97,15 @@ public class MentorService {
     public MentorResponseDto findByIdAndState(Long id, boolean State) {
         MentorResponseDto mentorResponseDto = mentorRepository.findByIdAndState( id,State)
                 .map(MentorResponseDto::from)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멘토가 없습니다. id=" + id));
+                .orElseThrow(() -> new CustomException(MENTOR_NOT_FOUND));
 
         return mentorResponseDto;
     }
 
-    @Transactional(readOnly = true)
-    public List<Mentor> test() {
-        List<Mentor> list = mentorRepository.findAll();
+    public Mentor getMentor( Long mentorId){
+        Optional<Mentor> optionalMentor = Optional.ofNullable( mentorRepository.findById(mentorId)
+                .orElseThrow(() -> new CustomException(MENTOR_NOT_FOUND)));
+        return optionalMentor.get();
 
-        return list;
     }
 }
