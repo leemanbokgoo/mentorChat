@@ -1,12 +1,9 @@
 package com.example.metoChat.domain.mentor;
 
-import com.amazonaws.services.ec2.model.Route;
 import com.example.metoChat.web.dto.mento.MentorListResponseDto;
 import com.example.metoChat.web.dto.mento.SearchRequestDto;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +19,7 @@ import static com.example.metoChat.domain.user.QUser.user;
 
 @Repository
 @RequiredArgsConstructor
-public class MentorRepositoryImpl  implements MentorRepositoryCustom {
+public class MentorRepositoryCustomImpl implements MentorRepositoryCustom {
     private final JPAQueryFactory query;
 
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MentorTimeRepositoryImpl implements MentorTimeRepositoryCustom{
+public class MentorTimeRepositoryCustomImpl implements MentorTimeRepositoryCustom{
     private final JPAQueryFactory query;
 
     @Override
