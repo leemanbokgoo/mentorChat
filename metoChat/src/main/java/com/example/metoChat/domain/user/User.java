@@ -1,8 +1,6 @@
 package com.example.metoChat.domain.user;
 
 import com.example.metoChat.domain.BaseTimeEntity;
-import com.example.metoChat.domain.chat.Chat;
-import com.example.metoChat.domain.chat.ChatChatRoom;
 import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.Reviews.Reviews;
 import com.example.metoChat.domain.metoring.Mentoring;
@@ -55,14 +53,6 @@ public class User extends BaseTimeEntity {
     // User <- Reviews
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reviews> reviews = new ArrayList<>();
-
-    // User <- chatRoom
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<ChatChatRoom> chatRooms = new ArrayList<>();
-
-    // User <- chat
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Chat> chats = new ArrayList<>();
 
     @Builder
     public User(String name, String email, Role role, String password ) {

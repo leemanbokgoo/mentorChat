@@ -35,7 +35,7 @@ public class MentorTimeController {
     @GetMapping("/day/{dayOfweek}/{id}/{mentoringDate}")
     public ResponseEntity getMentorTime(@PathVariable("dayOfweek") int dayOfWeek,@PathVariable("id") Long id,@PathVariable("mentoringDate") LocalDate mentoringDate) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        List<Map<String, String>> mentorTimeList = mentorTimeService.getMentorTime( id, dayOfWeek, mentoringDate);
+        List<Map<String, String>> mentorTimeList = mentorTimeService.getResevationTime( id, dayOfWeek, mentoringDate);
 
         return new ResponseEntity<>(new HttpResponseDto(true, mentorTimeList), httpHeaders, HttpStatus.OK);
     }

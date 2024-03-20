@@ -19,7 +19,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MentoringRepositoryImpl implements MentoringRepositoryCustom {
+public class MentoringRepositoryCustomImpl implements MentoringRepositoryCustom {
     private final JPAQueryFactory query;
 
     @Override

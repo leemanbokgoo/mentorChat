@@ -8,11 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface MentorRepository extends JpaRepository<Mentor, Long> {
-    /**
-     * @param id
-     * @return
-     */
+public interface MentorRepository extends JpaRepository<Mentor, Long>,MentorRepositoryCustom {
+
     // 멘토 존재 여부
     Optional<Mentor> findByIdAndState(Long id, boolean State);
 

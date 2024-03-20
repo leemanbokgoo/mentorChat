@@ -2,7 +2,7 @@ package com.example.metoChat.servcie;
 
 import com.example.metoChat.domain.mentor.MentorRepository;
 import com.example.metoChat.domain.mentor.Mentor;
-import com.example.metoChat.domain.mentor.MentorRepositoryImpl;
+import com.example.metoChat.domain.mentor.MentorRepositoryCustom;
 import com.example.metoChat.domain.user.User;
 import com.example.metoChat.domain.user.UserRepository;
 import com.example.metoChat.exception.CustomException;
@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.example.metoChat.exception.ErrorCode.MENTOR_NOT_FOUND;
-import static com.example.metoChat.exception.ErrorCode.USER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Service
@@ -27,7 +26,6 @@ public class MentorService {
 
     private final MentorRepository mentorRepository;
     private final UserRepository userRepository;
-    private final MentorRepositoryImpl mentorRepositoryImpl;
     private final MentorTimeService mentorTimeService;
 
 
@@ -70,7 +68,7 @@ public class MentorService {
 
         int page = pageable.getPageNumber() - 1; // page 위치에 있는 값은 0부터 시작
         int pageLimit = 5; // 한페이지에 보여줄 글 개수
-        Page<MentorListResponseDto> list =  mentorRepositoryImpl.getSearchMentor(PageRequest.of(page, pageLimit), new SearchRequestDto(true, filter, search));
+        Page<MentorListResponseDto> list =  mentorRepository.getSearchMentor(PageRequest.of(page, pageLimit), new SearchRequestDto(true, filter, search));
 
         return list;
     }

@@ -3,14 +3,11 @@ package com.example.metoChat.servcie;
 import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.mentorTime.MentorTime;
 import com.example.metoChat.domain.mentorTime.MentorTimeRepository;
-import com.example.metoChat.domain.mentorTime.MentorTimeRepositoryImpl;
-import com.example.metoChat.domain.metoring.MentoringRepositoryCustom;
-import com.example.metoChat.domain.metoring.MentoringRepositoryImpl;
+import com.example.metoChat.domain.metoring.MentoringRepositoryCustomImpl;
 import com.example.metoChat.exception.CustomException;
 import com.example.metoChat.web.dto.mentorTime.MentorTimeListResponse;
 import com.example.metoChat.web.dto.mentorTime.MentorTimeSaveRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +25,7 @@ import static com.example.metoChat.exception.ErrorCode.USER_NOT_FOUND;
 public class MentorTimeService {
 
     private final MentorTimeRepository mentorTimeRepository;
-    private final MentorTimeRepositoryImpl mentorTimeRepositoryImpl;
-    private final MentoringRepositoryImpl mentoringRepositoryImpl;
+    private final MentoringRepositoryCustomImpl mentoringRepositoryImpl;
 
     // 멘토링 설정 시간 등록
     @Transactional
@@ -59,13 +55,13 @@ public class MentorTimeService {
     // 멘토링 신청 시간 확인
     @Transactional(readOnly = true)
     public  List<MentorTimeListResponse> mentoringTimeCheck( Long mentorId){
-        return mentorTimeRepositoryImpl.getDayOfWeekDay(mentorId);
+        return mentorTimeRepository.getDayOfWeekDay(mentorId);
     }
 
     @Transactional(readOnly = true)
     public List<Map<String, String>> getResevationTime( Long id, int dayOfWeek, LocalDate mentoringDate ){
 
-        List<MentorTimeListResponse> mentorResponses = mentorTimeRepositoryImpl.getTimeByDayforWeek(id,dayOfWeek);
+        List<MentorTimeListResponse> mentorResponses = mentorTimeRepository.getTimeByDayforWeek(id,dayOfWeek);
         if (mentorResponses.size() != 0 ){
 
             int timePerSession = mentorTimeRepository.findMentoringTimeById(id);

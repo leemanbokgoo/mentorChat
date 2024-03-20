@@ -1,5 +1,6 @@
 package com.example.metoChat.config;
 
+import com.example.metoChat.aop.TimeTraceAop;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

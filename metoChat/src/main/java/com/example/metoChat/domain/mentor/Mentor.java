@@ -78,7 +78,7 @@ public class Mentor extends BaseTimeEntity {
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mentoring> mentoring = new ArrayList<>();
 
-    // mentor <- mentorTime
+    // mentor <- reviews
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
     private List<Reviews> reviews = new ArrayList<>();
 
