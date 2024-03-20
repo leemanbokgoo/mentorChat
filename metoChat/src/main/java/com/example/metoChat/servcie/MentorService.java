@@ -31,15 +31,8 @@ public class MentorService {
 
     // 멘토 등록
     @Transactional
-    public Long save(MentorSaveRequestDto requestDto, User user) {
-        Mentor mentor = mentorRepository.save(requestDto.toEntity(user));
-        List<MentorTimeSaveRequestDto> mentorTImelist = requestDto.getMentoringTimeList();
-
-        for( MentorTimeSaveRequestDto dto : mentorTImelist) {
-            mentorTimeService.save(dto, mentor );
-        }
-
-        return mentor.getId();
+    public Mentor save(MentorSaveRequestDto requestDto, User user) {
+        return  mentorRepository.save(requestDto.toEntity(user));;
     }
 
     // 멘토 수정
@@ -75,12 +68,8 @@ public class MentorService {
 
     // 멘토 상태 업데이트
     @Transactional
-    public boolean stateUpdate(boolean state, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                    .orElseThrow(() -> new CustomException(MENTOR_NOT_FOUND));
-        Mentor mentor = user.getMentor();
+    public boolean stateUpdate(boolean state, Mentor mentor) {
         mentor.stateUpdate(state);
-
         return mentor.isState();
     }
 
@@ -101,10 +90,13 @@ public class MentorService {
         return mentorResponseDto;
     }
 
+    @Transactional(readOnly = true)
     public Mentor getMentor( Long mentorId){
         Optional<Mentor> optionalMentor = Optional.ofNullable( mentorRepository.findById(mentorId)
                 .orElseThrow(() -> new CustomException(MENTOR_NOT_FOUND)));
         return optionalMentor.get();
 
     }
+
+
 }
