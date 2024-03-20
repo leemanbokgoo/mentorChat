@@ -25,33 +25,19 @@ import static com.example.metoChat.exception.ErrorCode.MENTOR_NOT_FOUND;
 public class MentorService {
 
     private final MentorRepository mentorRepository;
-    private final UserRepository userRepository;
     private final MentorTimeService mentorTimeService;
 
 
     // 멘토 등록
     @Transactional
     public Mentor save(MentorSaveRequestDto requestDto, User user) {
-        return  mentorRepository.save(requestDto.toEntity(user));;
+        return  mentorRepository.save(requestDto.toEntity(user));
     }
 
     // 멘토 수정
     @Transactional
     public Long update( Mentor mentor,  MentorUpdateRequestDto requestDto) {
-        // 기존 멘토링 시간 설정 삭제
-        if (mentor != null) {
-            mentorTimeService.delete(mentor);
-        } else {
-            throw new CustomException(MENTOR_NOT_FOUND);
-        }
-
-        // 새로 멘토링 시간 저장
-        List<MentorTimeSaveRequestDto> mentorTImelist = requestDto.getMentoringTimeList();
-        for( MentorTimeSaveRequestDto dto : mentorTImelist) {
-            mentorTimeService.save(dto, mentor );
-        }
         mentor.update(requestDto);
-
         return mentor.getId();
     }
 

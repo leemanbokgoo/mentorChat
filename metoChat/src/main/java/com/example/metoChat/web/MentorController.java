@@ -5,6 +5,7 @@ import com.example.metoChat.config.auth.dto.SessionUser;
 import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.user.User;
 import com.example.metoChat.domain.user.UserRepository;
+import com.example.metoChat.exception.CustomException;
 import com.example.metoChat.servcie.MentorService;
 import com.example.metoChat.servcie.MentorTimeService;
 import com.example.metoChat.servcie.UserService;
@@ -23,6 +24,8 @@ import java.awt.print.Pageable;
 import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.metoChat.exception.ErrorCode.MENTOR_NOT_FOUND;
 
 @RequiredArgsConstructor
 @RestController
@@ -52,8 +55,25 @@ public class MentorController {
     @PutMapping("/")
     public ResponseEntity update(@RequestBody MentorUpdateRequestDto requestDto, @LoginUser SessionUser user) {
         HttpHeaders httpHeaders = new HttpHeaders();
+
+        // 멘토 설정 수정
         User userEntity = userService.getUserByEmail(user.getEmail());
-        Long mentorID = mentorService.update(userEntity.getMentor(), requestDto);
+        Mentor mentor = userEntity.getMentor();
+        Long mentorID = mentorService.update(mentor, requestDto);
+
+        // 기존 멘토링 시간 설정 삭제
+        if (mentor != null) {
+            mentorTimeService.delete(mentor);
+        } else {
+            throw new CustomException(MENTOR_NOT_FOUND);
+        }
+
+        // 새로 멘토링 시간 설정 저장
+        List<MentorTimeSaveRequestDto> mentorTImelist = requestDto.getMentoringTimeList();
+        for( MentorTimeSaveRequestDto dto : mentorTImelist) {
+            mentorTimeService.save(dto, mentor );
+        }
+
         return new ResponseEntity<>(new HttpResponseDto(true, mentorID), httpHeaders, HttpStatus.OK);
     }
 
