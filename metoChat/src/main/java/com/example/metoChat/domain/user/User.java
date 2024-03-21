@@ -47,11 +47,11 @@ public class User extends BaseTimeEntity {
     private Mentor mentor;
 
     // User <- mentorring
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Mentoring> mentorrings = new ArrayList<>();
 
     // User <- Reviews
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reviews> reviews = new ArrayList<>();
 
     @Builder

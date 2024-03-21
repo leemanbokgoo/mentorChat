@@ -2,6 +2,7 @@ package com.example.metoChat.domain.metoring;
 
 
 import com.example.metoChat.domain.BaseTimeEntity;
+import com.example.metoChat.domain.Reviews.Reviews;
 import com.example.metoChat.domain.mentor.Mentor;
 import com.example.metoChat.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -42,14 +45,17 @@ public class Mentoring extends BaseTimeEntity {
     private LocalDate mentoringDate;
 
     // ManyToOne 어노테이션을 사용하여 User 엔티티와의 관계를 설정
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id") // user_id 컬럼을 외래키로 사용하여 조인
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
+    // mentor <- reviews
+    @OneToMany(mappedBy = "mentoring", cascade = CascadeType.ALL)
+    private List<Reviews> reviews = new ArrayList<>();
 
     @Builder
     public Mentoring ( String content, LocalTime startTime , int state, LocalTime endTime, LocalDate mentoringDate, User user , Mentor mentor) {

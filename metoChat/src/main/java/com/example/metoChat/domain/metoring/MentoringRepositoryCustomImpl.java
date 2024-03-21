@@ -1,6 +1,6 @@
 package com.example.metoChat.domain.metoring;
 
-import com.example.metoChat.web.dto.mentorTime.MentorTimeListResponse;
+import com.example.metoChat.web.dto.mentorTime.MentorTimeListResponseDto;
 import com.example.metoChat.web.dto.mentoring.MentoringListResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -51,7 +51,7 @@ public class MentoringRepositoryCustomImpl implements MentoringRepositoryCustom 
     }
 
     @Override
-    public List<MentorTimeListResponse> getTimeByMentoringDate(Long id, LocalDate mentoringDate) {
+    public List<MentorTimeListResponseDto> getTimeByMentoringDate(Long id, LocalDate mentoringDate) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(mentoring.mentoringDate.eq(mentoringDate));
         builder.and(mentoring.mentor.id.eq(id));
@@ -61,7 +61,7 @@ public class MentoringRepositoryCustomImpl implements MentoringRepositoryCustom 
         return query
                 .select(
                         Projections.constructor(
-                                MentorTimeListResponse.class,
+                                MentorTimeListResponseDto.class,
                                 mentoring.id,
                                 mentoring.startTime,
                                 mentoring.endTime,

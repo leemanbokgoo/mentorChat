@@ -13,8 +13,4 @@ public interface MentorRepository extends JpaRepository<Mentor, Long>,MentorRepo
     // 멘토 존재 여부
     Optional<Mentor> findByIdAndState(Long id, boolean State);
 
-    Page<Mentor> findAll(Pageable pageable);
-
-    //전체 갯수 조회
-    int countByState(boolean state);
 }
