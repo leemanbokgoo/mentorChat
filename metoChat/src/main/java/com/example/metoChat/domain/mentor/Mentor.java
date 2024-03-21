@@ -71,11 +71,8 @@ public class Mentor extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // mentor <- mentorTime
-    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<MentorTime> mentorTimes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Mentoring> mentoring = new ArrayList<>();
 
 
